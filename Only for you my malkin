@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year 2026 Celebration</title>
+    <style>
+        :root {
+            --pink: #ff85a1;
+            --dark-pink: #f06292;
+            --bg: #fce4ec;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            color: #444;
+        }
+        .screen {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #d81b60; }
+        .timer { font-size: 2rem; font-weight: bold; margin: 20px 0; color: #ad1457; }
+        
+        button {
+            background-color: var(--pink);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        button:active { transform: scale(0.9); }
+
+        /* Balloons Animation */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            background: var(--pink);
+            border-radius: 50%;
+            animation: float 4s ease-in forwards;
+            z-index: 1;
+        }
+        @keyframes float {
+            to { transform: translateY(-110vh); opacity: 0; }
+        }
+
+        /* Wish Card */
+        #wishCard {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px dashed var(--pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen" id="mainScreen">
+        <p>POV: It's New Beginning 💖</p>
+        <h1>Counting down to 2026 🎇</h1>
+        
+        <div class="timer" id="countdown">00 : 00 : 00</div>
+        
+        <button onclick="startCelebration()">✨ Let's Celebrate</button>
+
+        <div id="wishCard">
+            <h2>Happy New Year 2026! 🎉</h2>
+            <p>Wishing you a year full of joy, success, and new adventures! ✨</p>
+            <p style="font-style: italic;">- Made with ❤️ for You</p>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Logic
+        function updateTimer() {
+            const now = new Date().getTime();
+            const nextYear = new Date("Jan 1, 2026 00:00:00").getTime();
+            const diff = nextYear - now;
+
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                `${h < 10 ? '0'+h : h} : ${m < 10 ? '0'+m : m} : ${s < 10 ? '0'+s : s}`;
+        }
+        setInterval(updateTimer, 1000);
+
+        // Celebration Logic
+        function startCelebration() {
+            // Show Card
+            document.getElementById('wishCard').style.display = 'block';
+            
+            // Create Balloons
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.style.left = Math.random() * 100 + 'vw';
+                    b.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+                    document.body.appendChild(b);
+                    
+                    // Remove from DOM after animation
+                    setTimeout(() => b.remove(), 4000);
+                }, i * 150);
+            }
+        }
+    </script>
+</body>
+</html>
